@@ -2,13 +2,12 @@
 
 const express = require('express');
 const mongoose = require('mongoose');
+const route = require('./Routes/userRoutes'); // Importing the user routes
 
 const app = express();
 
 //MiddleWare
-app.use("/",(req,res,next)=>{
-    res.send("Middleware is working");
-})
+app.use("/User", route);
 
 mongoose.connect("mongodb+srv://Maduwantha:sample@quickcart.0gi7oq0.mongodb.net/")
 .then(()=>console.log("Connected to MongoDB"))
