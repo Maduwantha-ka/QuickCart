@@ -7,7 +7,9 @@ const route = require('./Routes/userRoutes'); // Importing the user routes
 const app = express();
 
 //MiddleWare
+app.use(express.json()); // To parse JSON bodies
 app.use("/User", route);
+
 
 mongoose.connect("mongodb+srv://Maduwantha:sample@quickcart.0gi7oq0.mongodb.net/")
 .then(()=>console.log("Connected to MongoDB"))

@@ -8,6 +8,7 @@ const userControl = require('../Controllers/userControl');
 
 //create the route paths
 router.get("/", userControl.getAllUsers); //get all users
+router.post("/", userControl.addUser); //add a new user
 
 //export
 module.exports = router;

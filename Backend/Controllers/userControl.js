@@ -26,5 +26,35 @@ const getAllUsers = async (req, res, next) => {
     return res.status(200).json({ User });
     };
 
+    //Data insert part
+
+    const addUser = async (req, res, next) => {
+
+      const { username, email, phoneNumber, age } = req.body;
+      let insertUser;
+
+      try{
+        insertUser = new model({
+          username,
+          email,
+          phoneNumber,
+          age
+        });
+
+        await insertUser.save();
+      }catch (err) {
+        console.log(err);
+      }
+
+      //can not insert user
+      if (!insertUser) {
+        return res.status(500).json({ message: "Unable to add user" });
+      }
+
+      //return the inserted user
+      return res.status(200).json({ insertUser });
+    }
+
     //export the function
     exports.getAllUsers = getAllUsers;
+    exports.addUser = addUser;
