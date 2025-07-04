@@ -55,6 +55,78 @@ const getAllUsers = async (req, res, next) => {
       return res.status(200).json({ insertUser });
     }
 
+    //user get by id
+
+     const getUserById = async (req, res, next) => {
+
+       const userId = req.params.id;
+       let user;
+
+       try {
+         user = await model.findById(userId);
+       } catch (err) {
+         console.log(err);
+       }
+
+        //can not find user
+       if (!user) {
+         return res.status(404).json({ message: "User not found" });
+       }
+        //return the user
+        return res.status(200).json({ user });
+     }
+
+     //update user by id
+
+      const UpdateUser = async (req, res, next) => {
+        const userId = req.params.id;
+        const { username, email, phoneNumber, age } = req.body;
+        let users;
+
+        try {
+          users = await model.findByIdAndUpdate(userId, {
+            username,
+            email,
+            phoneNumber,
+            age
+          });
+          users = await users.save();
+        } catch (err) {
+          console.log(err);
+        }
+
+        //can not find user
+        if (!users) {
+          return res.status(404).json({ message: "unable to update user" });
+        }
+
+        //return the user
+        return res.status(200).json({ users });
+      }
+
+      //delete user by id
+      const deleteUser = async (req, res, next) => {
+        const userId = req.params.id;
+        let deleteUser;
+
+        try {
+          deleteUser = await model.findByIdAndDelete(userId);
+        } catch (err) {
+          console.log(err);
+        }
+
+        //can not find user
+        if (!deleteUser) {
+          return res.status(404).json({ message: "Can not delete user" });
+        }
+
+        //return the user
+        return res.status(200).json({ deleteUser});
+      }
+
     //export the function
     exports.getAllUsers = getAllUsers;
     exports.addUser = addUser;
+    exports.getUserById = getUserById;
+    exports.UpdateUser = UpdateUser;
+    exports.deleteUser = deleteUser;
